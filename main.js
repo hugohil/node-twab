@@ -1,10 +1,13 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
 var global = require('./config');
 
 server.listen(global.config.port);
+
+app.use(express.static('public/static'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
