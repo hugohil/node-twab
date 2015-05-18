@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>twab writter</title>
+</head>
+<body>
+  <label for="text">Text</label>
+  <textarea name="text" id="text"></textarea>
+
+  <label for="pass">Password</label>
+  <input name="pass" type="password" id="pass"/>
+
+  <button class="submit">Send</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+    var socket = io.connect(':5050');
+
+    document.querySelector('.submit').onclick = function(){
+      var text = document.querySelector('#text').value;
+      var pass = document.querySelector('#pass').value;
+      var params = {
+        txt: text,
+        pass: pass
+      }
+      socket.emit('written', params);
+    }
+  </script>
+</body>
+</html>

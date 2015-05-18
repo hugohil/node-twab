@@ -1,0 +1,15 @@
+{
+  "name": "node-twab",
+  "version": "0.0.1",
+  "description": "node portage of twab",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hugohil",
+  "license": "none",
+  "dependencies": {
+    "express": "^4.12.4",
+    "socket.io": "^1.3.5"
+  }
+}

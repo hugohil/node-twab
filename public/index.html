@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>twab</title>
+</head>
+<body>
+
+<div class="container">
+  <ul class="list"></ul>
+</div>
+
+<footer>node-twab is a nodejs/socket.io version of <a href="https://github.com/raphaelbastide/twab">twab</a>.</footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var httpRequest;
+    var socket = io.connect(':5050');
+    socket.on('new-txt', function (data) {
+      // var li = document.createElement('li');
+      // li.textContent = data;
+      document.querySelector('.list').insertAdjacentHTML('afterbegin', '<li>' + data + '</li>');
+      document.title = data;
+    });
+
+    window.onload = function(){
+      getTwabs();
+    }
+
+    function getTwabs(){
+      httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = handleResponse;
+      httpRequest.open('GET', '/twabs', true);
+      httpRequest.send();
+    }
+
+    function handleResponse(){
+      if (httpRequest.readyState === 4) {
+        if (httpRequest.status === 200) {
+          var splitted = httpRequest.responseText.split(/\n/g);
+          console.log(splitted);
+
+          for (var i = splitted.length - 2; i >= 0; i--) {
+            var li = document.createElement('li');
+            li.textContent = splitted[i];
+            document.querySelector('.list').appendChild(li);
+          };
+
+          document.title = splitted[splitted.length - 2];
+        } else {
+          console.log('There was a problem with the request.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
