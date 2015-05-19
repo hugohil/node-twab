@@ -15,13 +15,14 @@
 
 
   <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="autolink.js"></script>
   <script>
     var httpRequest;
     var socket = io.connect(':5050');
     socket.on('new-txt', function (data) {
       // var li = document.createElement('li');
       // li.textContent = data;
-      document.querySelector('.list').insertAdjacentHTML('afterbegin', '<li>' + data + '</li>');
+      document.querySelector('.list').insertAdjacentHTML('afterbegin', '<li>' + data.autoLink({target: '_blank'}) + '</li>');
       document.title = data;
     });
 
@@ -44,7 +45,7 @@
 
           for (var i = splitted.length - 2; i >= 0; i--) {
             var li = document.createElement('li');
-            li.textContent = splitted[i];
+            li.innerHTML = splitted[i].autoLink({target: '_blank'});
             document.querySelector('.list').appendChild(li);
           };
 
@@ -54,6 +55,12 @@
         }
       }
     }
+
+      var elements = document.querySelectorAll('li');
+      Array.prototype.forEach.call(elements, function(el, i){
+          var text = el.innerHTML;
+          el.innerHTML = text.autoLink({target: '_blank'});
+      });
   </script>
 </body>
 </html>

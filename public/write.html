@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>twab writter</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href='/style.css' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body class="twab write">
   <label for="text">Text</label>
   <textarea name="text" id="text"></textarea>
 
@@ -18,6 +20,9 @@
 
     document.querySelector('.submit').onclick = function(){
       var text = document.querySelector('#text').value;
+      if(!text.length){
+        return;
+      }
       var pass = document.querySelector('#pass').value;
       var params = {
         txt: text,
