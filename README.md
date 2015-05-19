@@ -9,7 +9,7 @@ Install node modules and create your own config and twabs file.
 ```shell
 $ npm i
 $ cp config-example.js config.js
-$ twabs.txt
+$ touch twabs.txt
 ```
 
 ## Usage
