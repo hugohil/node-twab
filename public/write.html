@@ -17,6 +17,11 @@
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript">
     var socket = io.connect(':5050');
+    var tweetRequest;
+    var tweet = {
+      handle: '@hugohil',
+      url: 'hugohil.ninja/twab'
+    }
 
     document.querySelector('.submit').onclick = function(){
       var text = document.querySelector('#text').value;
@@ -29,6 +34,28 @@
         pass: pass
       }
       socket.emit('written', params);
+      tweetTwabs();
+      document.querySelector('#text').value = '';
+    }
+
+
+    function tweetTwabs(){
+      tweetRequest = new XMLHttpRequest();
+      tweetRequest.onreadystatechange = handleResponse;
+      tweetRequest.open('POST', 'http://localhost:4242/update', true);
+      var params = 'twitterHandle=' + tweet.handle + '&twabURL=' + tweet.url;
+      tweetRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      tweetRequest.send(params);
+    }
+
+    function handleResponse(){
+      if (tweetRequest.readyState === 4) {
+        if (tweetRequest.status === 200) {
+          console.log(tweetRequest.response)
+        } else {
+          console.log('There was a problem with the request.');
+        }
+      }
     }
   </script>
 </body>
